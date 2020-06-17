@@ -1,0 +1,28 @@
+version: '3'
+
+services:
+   maas:
+      container_name: maas
+      image: maas
+      environment:
+      - ADMIN_EMAIL=limech@gmail.com
+      - ADMIN_PASSWORD=passw0rd       
+      - HOST_IP=$HOST_IP
+      - POSTGRES_USER=maas
+      - POSTGRES_DB=maas
+      - POSTGRES_PASSWORD=passw0rd
+      network_mode: "host"
+   maas-db:
+      container_name: maas-db
+      image: postgres
+      environment:
+      - POSTGRES_USER=maas
+      - POSTGRES_DB=maas
+      - POSTGRES_PASSWORD=passw0rd
+      volumes:
+       - maas-db-data:/var/lib/postgresql/data
+      ports:
+      - 5432:5432
+volumes:
+  maas-db-data:
+    driver: local
